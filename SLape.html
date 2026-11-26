@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SLAPE - Wireframe Prototype</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js for Radar & Analysis Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            wf: {
+              bg: '#F8FAFC',
+              card: '#FFFFFF',
+              border: '#CBD5E1',
+              darkBorder: '#475569',
+              primary: '#2563EB',
+              primaryDark: '#1D4ED8',
+              accent: '#0EA5E9',
+              text: '#1E293B',
+              muted: '#64748B',
+              lightBg: '#F1F5F9',
+              danger: '#EF4444',
+              warning: '#F59E0B',
+              success: '#10B981'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    /* Wireframe style dashed/solid element highlights */
+    .wf-box {
+      border: 2px dashed #94A3B8;
+    }
+    .wf-box-solid {
+      border: 1px solid #CBD5E1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #CBD5E1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-wf-bg text-wf-text min-h-screen flex flex-col antialiased selection:bg-wf-accent selection:text-white">
+
+  <!-- TOP HEADER / MAIN APP NAVIGATION -->
+  <header class="bg-white border-b border-wf-border sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo & Branding -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchScreen(1)">
+          <div class="w-10 h-10 rounded-lg bg-wf-primary text-white flex items-center justify-center font-bold text-xl shadow-inner">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <div>
+            <div class="font-bold text-lg leading-tight tracking-tight text-slate-800">SLAPE <span class="text-[11px] px-2.5 py-0.5 bg-blue-100 text-wf-primary rounded-full font-semibold">Smart Learning and Personalized Education</span></div>
+            <div class="text-xs text-wf-muted">Trải nghiệm học tập &amp; Định hướng lộ trình</div>
+          </div>
+        </div>
+
+        <!-- Wireframe Navigation Tabs -->
+        <nav class="hidden md:flex space-x-1 lg:space-x-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
+          <button onclick="switchScreen(1)" id="nav-btn-1" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 flex items-center space-x-1 text-slate-600 hover:text-slate-900">
+            <i class="fa-solid fa-user-lock text-xs"></i>
+            <span>1. Tài khoản</span>
+          </button>
+          <button onclick="switchScreen(2)" id="nav-btn-2" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 flex items-center space-x-1 text-slate-600 hover:text-slate-900">
+            <i class="fa-solid fa-sliders text-xs"></i>
+            <span>2. Cấu hình Test</span>
+          </button>
+          <button onclick="switchScreen(3)" id="nav-btn-3" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 flex items-center space-x-1 text-slate-600 hover:text-slate-900">
+            <i class="fa-solid fa-file-pen text-xs"></i>
+            <span>3. Bài test</span>
+          </button>
+          <button onclick="switchScreen(4)" id="nav-btn-4" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 flex items-center space-x-1 text-slate-600 hover:text-slate-900">
+            <i class="fa-solid fa-chart-pie text-xs"></i>
+            <span>4. Báo cáo Điểm mù</span>
+          </button>
+          <button onclick="switchScreen(5)" id="nav-btn-5" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 flex items-center space-x-1 text-slate-600 hover:text-slate-900">
+            <i class="fa-solid fa-route text-xs"></i>
+            <span>5. Lộ trình AI</span>
+          </button>
+          <button onclick="switchScreen(6)" id="nav-btn-6" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 flex items-center space-x-1 text-slate-600 hover:text-slate-900">
+            <i class="fa-solid fa-book-open text-xs"></i>
+            <span>6. Kho Tài liệu</span>
+          </button>
+          <button onclick="switchScreen(7)" id="nav-btn-7" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 flex items-center space-x-1 text-slate-600 hover:text-slate-900">
+            <i class="fa-solid fa-trophy text-xs"></i>
+            <span>7. Xếp hạng &amp; Thành tích</span>
+          </button>
+        </nav>
+
+        <!-- Right User / Status Actions -->
+        <div class="flex items-center space-x-3">
+          <div class="hidden sm:flex items-center space-x-2 text-xs bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full border border-emerald-200">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="font-medium">AI Sync Active</span>
+          </div>
+          <button class="p-2 text-slate-500 hover:text-slate-700 rounded-lg border border-slate-200 text-xs" title="Wireframe Help">
+            <i class="fa-solid fa-circle-question text-base"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Bar -->
+    <div class="md:hidden flex overflow-x-auto py-2 px-3 bg-slate-50 border-t border-slate-200 space-x-2 custom-scrollbar">
+      <button onclick="switchScreen(1)" id="mobile-nav-1" class="px-3 py-1 whitespace-nowrap text-xs font-medium rounded-lg bg-slate-200 text-slate-700">1. Tài khoản</button>
+      <button onclick="switchScreen(2)" id="mobile-nav-2" class="px-3 py-1 whitespace-nowrap text-xs font-medium rounded-lg bg-slate-200 text-slate-700">2. Cấu hình Test</button>
+      <button onclick="switchScreen(3)" id="mobile-nav-3" class="px-3 py-1 whitespace-nowrap text-xs font-medium rounded-lg bg-slate-200 text-slate-700">3. Bài test</button>
+      <button onclick="switchScreen(4)" id="mobile-nav-4" class="px-3 py-1 whitespace-nowrap text-xs font-medium rounded-lg bg-slate-200 text-slate-700">4. Báo cáo Điểm mù</button>
+      <button onclick="switchScreen(5)" id="mobile-nav-5" class="px-3 py-1 whitespace-nowrap text-xs font-medium rounded-lg bg-slate-200 text-slate-700">5. Lộ trình AI</button>
+      <button onclick="switchScreen(6)" id="mobile-nav-6" class="px-3 py-1 whitespace-nowrap text-xs font-medium rounded-lg bg-slate-200 text-slate-700">6. Kho Tài liệu</button>
+      <button onclick="switchScreen(7)" id="mobile-nav-7" class="px-3 py-1 whitespace-nowrap text-xs font-medium rounded-lg bg-slate-200 text-slate-700">7. Xếp hạng &amp; Thành tích</button>
+    </div>
+  </header>
+
+  <!-- MAIN WIREFRAME CONTENT CONTAINER -->
+  <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+    <!-- ==================== SCREEN 1: AUTHENTICATION ==================== -->
+    <section id="screen-1" class="screen-content space-y-6">
+      <div class="flex flex-col md:flex-row items-center justify-between bg-blue-50/60 p-4 rounded-xl border border-blue-200 text-xs text-blue-800">
+        <div class="flex items-center space-x-2 mb-2 md:mb-0">
+          <i class="fa-solid fa-circle-info text-blue-600 text-base"></i>
+          <span><strong>Wireframe Step 1:</strong> Màn hình Tài khoản (Đăng nhập/Đăng ký) tập trung bảo mật thông tin cá nhân và tạo Nickname ẩn danh.</span>
+        </div>
+        <button onclick="switchScreen(2)" class="px-3 py-1 bg-wf-primary text-white rounded-md hover:bg-wf-primaryDark transition font-medium">Bỏ qua &amp; Bắt đầu Test &rarr;</button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
+        <!-- Left Banner Column -->
+        <div class="lg:col-span-6 space-y-6">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 bg-slate-100 border border-slate-300 rounded-full text-xs font-medium text-slate-600">
+            <i class="fa-solid fa-shield-halved text-wf-primary"></i>
+            <span>Giải pháp học tập an toàn &amp; bảo mật</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Bứt phá điểm số - Xóa bỏ <span class="text-wf-primary underline decoration-sky-400">điểm mù kiến thức</span> cùng AI Trợ lý
+          </h1>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Hệ thống phân tích dữ liệu lớn (Big Data) giúp định vị lỗ hổng kiến thức chuẩn xác, tổng hợp bài giảng YouTube và đề thi thử phù hợp riêng cho từng sinh viên.
+          </p>
+
+          <!-- Mock Visual Illustration Frame -->
+          <div class="wf-box p-6 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-center space-y-3 min-h-[220px]">
+            <div class="w-16 h-16 rounded-full bg-blue-100 border border-blue-300 flex items-center justify-center text-wf-primary text-2xl">
+              <i class="fa-solid fa-robot"></i>
+            </div>
+            <div class="text-xs font-semibold text-slate-700">[Wireframe Placeholder: UI Minh họa AI Trợ lý Học tập]</div>
+            <p class="text-xs text-slate-500 max-w-sm">Tự động hóa phân loại môn học, đánh giá năng lực đầu vào và tối ưu hóa thời gian ôn thi.</p>
+          </div>
+
+          <!-- Feature Bullets -->
+          <div class="grid grid-cols-2 gap-4 text-xs">
+            <div class="flex items-start space-x-2">
+              <i class="fa-solid fa-circle-check text-emerald-500 mt-0.5"></i>
+              <span class="text-slate-700">Không lo để lộ thông tin trường/lớp</span>
+            </div>
+            <div class="flex items-start space-x-2">
+              <i class="fa-solid fa-circle-check text-emerald-500 mt-0.5"></i>
+              <span class="text-slate-700">Phân loại bài giảng Youtube chuẩn xác</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Form Column -->
+        <div class="lg:col-span-6 max-w-md mx-auto w-full">
+          <div class="bg-white rounded-2xl border-2 border-slate-300 p-6 sm:p-8 shadow-sm space-y-6">
+            <!-- System Name & Logo Header inside Auth Card -->
+            <div class="text-center space-y-1.5">
+              <div class="inline-flex items-center justify-center space-x-2">
+                <div class="w-8 h-8 rounded-lg bg-wf-primary text-white flex items-center justify-center font-bold text-base shadow-sm">
+                  <i class="fa-solid fa-brain"></i>
+                </div>
+                <span class="text-2xl font-extrabold tracking-tight text-slate-900">SLAPE</span>
+              </div>
+              <p class="text-[11px] font-medium text-slate-500">Smart Learning and Personalized Education</p>
+            </div>
+
+            <!-- Form Header & Tabs -->
+            <div class="flex border-b border-slate-200">
+              <button id="auth-tab-login" onclick="toggleAuthMode('login')" class="flex-1 pb-3 text-center text-sm font-bold border-b-2 border-wf-primary text-wf-primary">
+                Đăng nhập
+              </button>
+              <button id="auth-tab-signup" onclick="toggleAuthMode('signup')" class="flex-1 pb-3 text-center text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-600">
+                Tạo tài khoản
+              </button>
+            </div>
+
+            <!-- Privacy Notice Banner -->
+            <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-800 flex items-start space-x-2">
+              <i class="fa-solid fa-user-shield text-amber-600 text-sm mt-0.5"></i>
+              <div>
+                <strong>Quyền riêng tư cá nhân:</strong> Bạn có thể dùng <strong>Nickname (Biệt danh)</strong> thay cho tên thật để không bị lộ danh tính khi xếp hạng học tập.
+              </div>
+            </div>
+
+            <!-- Dynamic Form -->
+            <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+              <!-- Extra Signup Field (Nickname) -->
+              <div id="field-nickname" class="hidden space-y-1">
+                <label class="text-xs font-semibold text-slate-700">Biệt danh hiển thị (Nickname)</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 text-xs"><i class="fa-solid fa-user-ninja"></i></span>
+                  <input type="text" placeholder="VD: SinhVienChamChi2026" class="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-wf-primary focus:outline-none">
+                </div>
+              </div>
+
+              <div class="space-y-1">
+                <label class="text-xs font-semibold text-slate-700">Email hoặc Tên tài khoản</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 text-xs"><i class="fa-solid fa-envelope"></i></span>
+                  <input type="text" required placeholder="student@university.edu.vn" value="student.demo@slape.edu.vn" class="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-wf-primary focus:outline-none">
+                </div>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex justify-between items-center">
+                  <label class="text-xs font-semibold text-slate-700">Mật khẩu</label>
+                  <a href="#" onclick="return false;" class="text-[11px] text-wf-primary hover:underline">Quên mật khẩu?</a>
+                </div>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 text-xs"><i class="fa-solid fa-lock"></i></span>
+                  <input type="password" required value="12345678" class="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-wf-primary focus:outline-none">
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between text-xs pt-1">
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="checkbox" checked class="rounded border-slate-300 text-wf-primary focus:ring-wf-primary">
+                  <span class="text-slate-600">Ghi nhớ đăng nhập</span>
+                </label>
+              </div>
+
+              <button type="submit" class="w-full py-2.5 bg-wf-primary hover:bg-wf-primaryDark text-white font-bold rounded-lg text-xs shadow-sm transition">
+                <span id="auth-btn-label">ĐĂNG NHẬP NGAY</span>
+              </button>
+            </form>
+
+            <div class="relative flex py-1 items-center">
+              <div class="flex-grow border-t border-slate-200"></div>
+              <span class="flex-shrink mx-3 text-[11px] text-slate-400 font-medium">Hoặc đăng nhập nhanh</span>
+              <div class="flex-grow border-t border-slate-200"></div>
+            </div>
+
+            <!-- Social Quick Auth -->
+            <div class="grid grid-cols-2 gap-3">
+              <button onclick="switchScreen(2)" class="flex items-center justify-center space-x-2 py-2 border border-slate-300 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+                <i class="fa-brands fa-google text-red-500"></i>
+                <span>Google</span>
+              </button>
+              <button onclick="switchScreen(2)" class="flex items-center justify-center space-x-2 py-2 border border-slate-300 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+                <i class="fa-brands fa-microsoft text-blue-500"></i>
+                <span>Microsoft</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================== SCREEN 2: TEST SETUP & CONFIG ==================== -->
+    <section id="screen-2" class="screen-content space-y-6 hidden">
+      <!-- Info Header -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold text-wf-primary uppercase tracking-wider">Màn hình 2</span>
+          <h2 class="text-2xl font-bold text-slate-900">Thiết lập Bài Test Chẩn đoán Đầu vào</h2>
+          <p class="text-xs text-slate-500">Chọn ngành học, môn học và cấu hình độ khó để AI khởi tạo bài kiểm tra điểm mù.</p>
+        </div>
+        <!-- Progress Steps Tracker -->
+        <div class="flex items-center space-x-2 text-xs">
+          <span class="px-2.5 py-1 rounded-full bg-wf-primary text-white font-bold">1. Ngành &amp; Môn</span>
+          <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+          <span class="px-2.5 py-1 rounded-full bg-slate-200 text-slate-700 font-medium">2. Mức độ &amp; Thời gian</span>
+          <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+          <span class="px-2.5 py-1 rounded-full bg-slate-200 text-slate-700 font-medium">3. Làm test</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left Form Setup Panel -->
+        <div class="lg:col-span-8 bg-white p-6 rounded-2xl border border-slate-300 shadow-sm space-y-6">
+
+          <!-- Step A: Select Major / Faculty -->
+          <div class="space-y-3">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center space-x-2">
+              <span class="w-5 h-5 rounded-full bg-wf-primary text-white flex items-center justify-center text-[10px]">1</span>
+              <span>Lựa chọn Chuyên ngành đào tạo</span>
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button type="button" onclick="selectMajor('ketoan')" id="major-ketoan" class="major-card p-3.5 rounded-xl border-2 border-wf-primary bg-blue-50/50 text-left transition space-y-1">
+                <div class="flex items-center justify-between">
+                  <i class="fa-solid fa-calculator text-wf-primary text-lg"></i>
+                  <span class="px-2 py-0.5 bg-wf-primary text-white text-[9px] font-bold rounded-full">Đang chọn</span>
+                </div>
+                <div class="font-bold text-xs text-slate-800">Kế toán doanh nghiệp</div>
+                <div class="text-[10px] text-slate-500">Kế toán tài chính, Kế toán quản trị, Kiểm toán...</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step B: Select Subject / Course -->
+          <div class="space-y-3 pt-2">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center space-x-2">
+              <span class="w-5 h-5 rounded-full bg-wf-primary text-white flex items-center justify-center text-[10px]">2</span>
+              <span>Chọn Môn học cần Ôn tập / Đánh giá</span>
+            </label>
+            <div class="relative">
+              <input type="text" placeholder="Tìm tên môn học (VD: Nguyên lý kế toán, Kế toán tài chính...)" class="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-xs">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+            </div>
+            
+            <!-- Subject List Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="subject-grid">
+              <label class="cursor-pointer border-2 border-wf-primary bg-blue-50/30 p-3 rounded-xl flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-xs text-slate-800">Kế toán Tài chính</div>
+                  <div class="text-[10px] text-slate-500">Mã môn: ACC201 • 3 Tín chỉ</div>
+                </div>
+                <input type="radio" name="subject" checked class="text-wf-primary">
+              </label>
+              <label class="cursor-pointer border border-slate-200 hover:border-slate-300 p-3 rounded-xl flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-xs text-slate-800">Nguyên lý Kế toán</div>
+                  <div class="text-[10px] text-slate-500">Mã môn: ACC101 • 3 Tín chỉ</div>
+                </div>
+                <input type="radio" name="subject" class="text-wf-primary">
+              </label>
+              <label class="cursor-pointer border border-slate-200 hover:border-slate-300 p-3 rounded-xl flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-xs text-slate-800">Kế toán Quản trị</div>
+                  <div class="text-[10px] text-slate-500">Mã môn: ACC302 • 3 Tín chỉ</div>
+                </div>
+                <input type="radio" name="subject" class="text-wf-primary">
+              </label>
+            </div>
+          </div>
+
+          <!-- Step C: Test Configurations -->
+          <div class="space-y-4 pt-2 border-t border-slate-200">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center space-x-2">
+              <span class="w-5 h-5 rounded-full bg-wf-primary text-white flex items-center justify-center text-[10px]">3</span>
+              <span>Cấu hình Mức độ &amp; Thời gian Test</span>
+            </label>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Difficulty -->
+              <div class="space-y-1.5">
+                <span class="text-xs font-semibold text-slate-700">Mức độ kiểm tra:</span>
+                <select id="select-difficulty" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs bg-white font-medium focus:ring-2 focus:ring-wf-primary">
+                  <option value="basic">Cơ bản (Đánh giá nền tảng lý thuyết)</option>
+                  <option value="medium" selected>Trung bình (Tương đương thi giữa kỳ)</option>
+                  <option value="hard">Nâng cao (Cấu trúc đề thi cuối kỳ chuẩn)</option>
+                </select>
+              </div>
+
+              <!-- Duration -->
+              <div class="space-y-1.5">
+                <span class="text-xs font-semibold text-slate-700">Thời gian làm bài:</span>
+                <div class="grid grid-cols-3 gap-2">
+                  <label class="border border-slate-300 rounded-lg p-2 text-center cursor-pointer hover:bg-slate-50">
+                    <input type="radio" name="duration" value="15" class="sr-only">
+                    <div class="text-xs font-bold">15 phút</div>
+                    <div class="text-[9px] text-slate-500">Chẩn đoán nhanh</div>
+                  </label>
+                  <label class="border-2 border-wf-primary bg-blue-50/50 rounded-lg p-2 text-center cursor-pointer">
+                    <input type="radio" name="duration" value="30" checked class="sr-only">
+                    <div class="text-xs font-bold text-wf-primary">30 phút</div>
+                    <div class="text-[9px] text-slate-500">Khuyên dùng</div>
+                  </label>
+                  <label class="border border-slate-300 rounded-lg p-2 text-center cursor-pointer hover:bg-slate-50">
+                    <input type="radio" name="duration" value="60" class="sr-only">
+                    <div class="text-xs font-bold">60 phút</div>
+                    <div class="text-[9px] text-slate-500">Toàn diện</div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="pt-4 flex items-center justify-end space-x-3">
+            <button type="button" class="px-4 py-2 border border-slate-300 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-50">Đặt lại</button>
+            <button type="button" onclick="startDiagnosticTest()" class="px-6 py-2.5 bg-wf-primary hover:bg-wf-primaryDark text-white font-bold rounded-lg text-xs shadow-md transition flex items-center space-x-2">
+              <span>BẮT ĐẦU KIỂM TRẢ CHẨN ĐOÁN</span>
+              <i class="fa-solid fa-play text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Side Diagnostic Preview Summary -->
+        <div class="lg:col-span-4 space-y-4">
+          <div class="bg-slate-900 text-white p-6 rounded-2xl space-y-4 shadow-sm">
+            <div class="flex items-center space-x-2 text-sky-400 text-xs font-bold">
+              <i class="fa-solid fa-microchip"></i>
+              <span>AI DIAGNOSTIC ENGINE</span>
+            </div>
+            <h3 class="text-lg font-bold">Bài test chẩn đoán giúp bạn điều gì?</h3>
+            <ul class="text-xs space-y-2.5 text-slate-300">
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                <span>Xác định chính xác <strong>chương / dạng bài</strong> bạn hay bị nhầm lẫn.</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                <span>Phân tích tốc độ phản xạ và thời gian suy nghĩ từng câu.</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                <span>Không mất thời gian học lại những phần đã nắm chắc.</span>
+              </li>
+            </ul>
+            <div class="p-3 bg-slate-800 rounded-xl text-[11px] text-slate-400 border border-slate-700">
+              💡 <em>Mẹo: Làm bài hết khả năng, có thể bỏ qua những câu không chắc chắn để AI đo lường điểm mù chính xác nhất.</em>
+            </div>
+          </div>
+
+          <!-- Interactive Test Simulation Overlay Card -->
+          <div id="test-running-box" class="hidden bg-amber-50 border-2 border-amber-300 p-5 rounded-2xl text-center space-y-3">
+            <div class="inline-block p-3 bg-amber-100 rounded-full text-amber-700 animate-bounce">
+              <i class="fa-solid fa-stopwatch text-xl"></i>
+            </div>
+            <div class="font-bold text-sm text-slate-800">Đang mô phỏng bài test 30 phút...</div>
+            <p class="text-xs text-slate-600">AI đang ghi nhận phản xạ làm bài và phân tích lỗ hổng kiến thức.</p>
+            <button type="button" onclick="finishTestAndShowReport()" class="w-full py-2 bg-emerald-600 text-white rounded-lg text-xs font-bold hover:bg-emerald-700 transition">
+              [Mở Màn hình Bài test &rarr;]
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================== SCREEN 3: DIAGNOSTIC TEST INTERFACE ==================== -->
+    <section id="screen-3" class="screen-content space-y-6 hidden">
+      <!-- Top Test Header & Countdown Timer -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <span class="text-xs font-bold text-wf-primary uppercase tracking-wider">Màn hình 3 • Đang làm bài</span>
+          <h2 class="text-2xl font-bold text-slate-900">Bài Test Chẩn đoán Đầu vào</h2>
+          <p class="text-xs text-slate-500">Chuyên ngành: Kế toán doanh nghiệp • Mức độ: Trung bình • Chọn đáp án phù hợp nhất cho từng câu.</p>
+        </div>
+
+        <!-- Timer & Answered Counter -->
+        <div class="flex items-center space-x-3">
+          <div class="bg-slate-100 border border-slate-200 px-3.5 py-2 rounded-xl text-xs">
+            <div class="text-[10px] text-slate-500 font-medium">Đã trả lời</div>
+            <div id="answered-count-label" class="font-extrabold text-sm text-slate-900">0 / 5 câu</div>
+          </div>
+          <div class="flex items-center space-x-2.5 bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-sm">
+            <i class="fa-solid fa-clock text-amber-400 text-base"></i>
+            <div>
+              <div class="text-[10px] text-slate-400 uppercase font-medium">Thời gian còn lại</div>
+              <div id="test-countdown-display" class="text-sm font-extrabold text-amber-400 font-mono">29:45</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Test Layout: Left Question Card (8 cols) + Right Question Navigator (4 cols) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left Column: Active Question Box -->
+        <div class="lg:col-span-8 bg-white p-6 rounded-2xl border border-slate-300 shadow-sm space-y-6">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+            <span id="question-number-badge" class="px-3 py-1 bg-blue-100 text-wf-primary rounded-full text-xs font-bold">
+              Câu hỏi 1 / 5
+            </span>
+            <span id="question-topic-tag" class="text-xs text-slate-500 font-medium">
+              Chuyên đề: Nguyên tắc &amp; Tài khoản Kế toán
+            </span>
+          </div>
+
+          <!-- Question Stem -->
+          <div class="space-y-2">
+            <h3 id="question-text" class="text-base font-bold text-slate-900 leading-relaxed">
+              Câu 1. Nguyên tắc kế toán nào yêu cầu doanh nghiệp phải ghi nhận doanh thu và chi phí vào kỳ kế toán phát sinh giao dịch, không phụ thuộc vào thời điểm thực thu hoặc thực chi tiền?
+            </h3>
+          </div>
+
+          <!-- Answer Options List -->
+          <div id="question-options" class="space-y-3">
+            <!-- Populated dynamically via JS -->
+          </div>
+
+          <!-- Bottom Controls: Prev / Next / Submit -->
+          <div class="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center space-x-2">
+              <button type="button" onclick="prevQuestion()" id="btn-prev-q" class="px-4 py-2 border border-slate-300 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+                &larr; Câu trước
+              </button>
+              <button type="button" onclick="nextQuestion()" id="btn-next-q" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-semibold transition">
+                Câu tiếp theo &rarr;
+              </button>
+            </div>
+
+            <button type="button" onclick="submitTestAndGoReport()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow-md transition flex items-center space-x-2">
+              <i class="fa-solid fa-check-double"></i>
+              <span>Nộp bài &amp; Xem Báo cáo Điểm mù</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column: Question Palette & AI Hint -->
+        <div class="lg:col-span-4 space-y-4">
+          <div class="bg-white p-5 rounded-2xl border border-slate-300 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700">Danh sách câu hỏi</h4>
+              <span class="text-[11px] text-slate-400">Bấm để chuyển nhanh</span>
+            </div>
+
+            <div id="question-palette" class="grid grid-cols-5 gap-2">
+              <!-- Populated dynamically via JS -->
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+              <span class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded bg-wf-primary inline-block"></span><span>Đang xem</span></span>
+              <span class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded bg-emerald-100 border border-emerald-400 inline-block"></span><span>Đã chọn</span></span>
+              <span class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded bg-slate-100 border border-slate-300 inline-block"></span><span>Chưa làm</span></span>
+            </div>
+          </div>
+
+          <div class="bg-slate-900 text-white p-5 rounded-2xl space-y-2.5 shadow-sm">
+            <div class="flex items-center space-x-2 text-sky-400 text-xs font-bold">
+              <i class="fa-solid fa-brain"></i>
+              <span>PHÂN TÍCH ĐIỂM MÙ TỰ ĐỘNG</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Khi bạn bấm <strong>Nộp bài &amp; Xem Báo cáo Điểm mù</strong>, hệ thống sẽ tổng hợp các câu làm sai để vẽ biểu đồ năng lực và lập lộ trình khắc phục ngay ở bước tiếp theo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================== SCREEN 4: DIAGNOSTIC & BLIND SPOT REPORT ==================== -->
+    <section id="screen-4" class="screen-content space-y-6 hidden">
+      <!-- Report Top Header Banner -->
+      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white p-6 rounded-2xl shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <div class="inline-flex items-center space-x-2 px-2.5 py-0.5 bg-sky-500/20 text-sky-300 text-xs rounded-full font-semibold border border-sky-500/30 mb-1">
+            <i class="fa-solid fa-chart-radar"></i> Kết quả Phân tích Big Data &amp; AI
+          </div>
+          <h2 class="text-2xl font-bold">Báo cáo Chẩn đoán Năng lực: Cấu trúc Dữ liệu &amp; Giải thuật</h2>
+          <p class="text-xs text-slate-300">Hoàn thành lúc: Hôm nay 08:30 • Thời gian làm: 24/30 phút</p>
+        </div>
+        <button type="button" onclick="switchScreen(5)" class="px-5 py-2.5 bg-wf-primary hover:bg-wf-primaryDark text-white font-bold rounded-xl text-xs shadow-lg transition flex items-center space-x-2">
+          <span>TẠO LỘ TRÌNH TỐI ƯU HÓA</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- Score KPI Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-1">
+          <div class="text-xs text-slate-500 font-medium">Tổng điểm ước tính</div>
+          <div class="text-2xl font-black text-slate-900">62<span class="text-xs font-normal text-slate-500">/100</span></div>
+          <div class="text-[10px] text-amber-600 font-semibold">Mức khá - Cần cải thiện</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-1">
+          <div class="text-xs text-slate-500 font-medium">Tỷ lệ chính xác</div>
+          <div class="text-2xl font-black text-emerald-600">65%</div>
+          <div class="text-[10px] text-emerald-600">Đúng 13/20 câu</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-1">
+          <div class="text-xs text-slate-500 font-medium">Điểm mù phát hiện</div>
+          <div class="text-2xl font-black text-rose-600">3 Dạng</div>
+          <div class="text-[10px] text-rose-600 font-semibold">Cần bổ sung kiến thức gấp</div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-1">
+          <div class="text-xs text-slate-500 font-medium">Thời gian trung bình/câu</div>
+          <div class="text-2xl font-black text-sky-600">1.2 <span class="text-xs font-normal text-slate-500">phút</span></div>
+          <div class="text-[10px] text-sky-600">Tốc độ làm bài tốt</div>
+        </div>
+      </div>
+
+      <!-- Main Analysis Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Radar Chart Visual -->
+        <div class="lg:col-span-5 bg-white p-5 rounded-2xl border border-slate-300 shadow-sm space-y-3">
+          <div class="flex justify-between items-center">
+            <h3 class="text-sm font-bold text-slate-800">Biểu đồ Đăng ký Năng lực (Radar)</h3>
+            <span class="text-[11px] text-slate-400">Độ bao phủ kiến thức</span>
+          </div>
+          <div class="relative min-h-[250px] flex items-center justify-center">
+            <canvas id="radarChart"></canvas>
+          </div>
+          <div class="text-[11px] text-slate-500 text-center italic">Biểu đồ chỉ ra sự lệch năng lực rõ rệt ở chương Cây AVL &amp; B-Tree.</div>
+        </div>
+
+        <!-- AI Identified Blind Spots List -->
+        <div class="lg:col-span-7 bg-white p-5 rounded-2xl border border-slate-300 shadow-sm space-y-4">
+          <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+            <h3 class="text-sm font-bold text-slate-800 flex items-center space-x-2">
+              <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
+              <span>Danh sách "Điểm mù Kiến thức" do AI phát hiện</span>
+            </h3>
+            <span class="text-xs bg-rose-100 text-rose-700 px-2.5 py-0.5 rounded-full font-bold">3 Cảnh báo</span>
+          </div>
+
+          <!-- Blindspot List Items -->
+          <div class="space-y-3">
+            <!-- Blindspot Item 1 -->
+            <div class="p-3.5 bg-rose-50/60 rounded-xl border border-rose-200 space-y-2">
+              <div class="flex justify-between items-start">
+                <span class="font-bold text-xs text-rose-900">1. Cân bằng Cây nhị tìm kiếm (AVL Tree Rotation)</span>
+                <span class="text-[10px] bg-rose-600 text-white px-2 py-0.5 rounded font-bold">Sai 80%</span>
+              </div>
+              <p class="text-xs text-slate-700">Bạn chưa nắm rõ các thao tác xoay đơn (LL, RR) và xoay kép (LR, RL) khi mất cân bằng chỉ số.</p>
+              <div class="flex items-center space-x-2 text-[11px] text-slate-500">
+                <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                <span>Gợi ý AI: Cần xem bài giảng trực quan 15 phút &amp; làm 10 bài tập tự luyện.</span>
+              </div>
+            </div>
+
+            <!-- Blindspot Item 2 -->
+            <div class="p-3.5 bg-amber-50/60 rounded-xl border border-amber-200 space-y-2">
+              <div class="flex justify-between items-start">
+                <span class="font-bold text-xs text-amber-900">2. Thuật toán Sắp xếp Nhanh (QuickSort Pivot selection)</span>
+                <span class="text-[10px] bg-amber-600 text-white px-2 py-0.5 rounded font-bold">Tốn quá nhiều thời gian</span>
+              </div>
+              <p class="text-xs text-slate-700">Thời gian làm phần này gấp 2.5 lần mức trung bình. Bạn lúng túng trong bước phân hoạch Partition.</p>
+            </div>
+
+            <!-- Blindspot Item 3 -->
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+              <div class="flex justify-between items-start">
+                <span class="font-bold text-xs text-slate-800">3. Đánh giá độ phức tạp thuật toán (Big-O Notation)</span>
+                <span class="text-[10px] bg-slate-500 text-white px-2 py-0.5 rounded font-bold">Nhầm lẫn công thức</span>
+              </div>
+              <p class="text-xs text-slate-600">Dễ bị nhầm giữa độ phức tạp không gian (Space Complexity) và thời gian (Time Complexity).</p>
+            </div>
+          </div>
+
+          <!-- Section Navigation CTA -->
+          <div class="pt-2 flex justify-end">
+            <button type="button" onclick="switchScreen(5)" class="px-5 py-2 bg-wf-primary text-white rounded-lg text-xs font-bold hover:bg-wf-primaryDark transition">
+              Chuyển sang Lộ trình khắc phục &rarr;
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================== SCREEN 5: PERSONALIZED ROADMAP ==================== -->
+    <section id="screen-5" class="screen-content space-y-6 hidden">
+      <!-- Roadmap Header -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <span class="text-xs font-bold text-wf-primary uppercase tracking-wider">Màn hình 5</span>
+          <h2 class="text-2xl font-bold text-slate-900">Lộ trình Ôn luyện Cá nhân hóa</h2>
+          <p class="text-xs text-slate-500">AI tự động thiết kế lộ trình theo từng ngày dựa trên điểm mù môn Cấu trúc dữ liệu.</p>
+        </div>
+
+        <!-- Countdown Banner -->
+        <div class="flex items-center space-x-3 bg-slate-900 text-white px-4 py-2.5 rounded-xl">
+          <i class="fa-solid fa-clock text-amber-400 text-lg"></i>
+          <div>
+            <div class="text-[10px] text-slate-400 uppercase font-medium">Đếm ngược Kỳ thi Cuối kỳ</div>
+            <div class="text-sm font-extrabold text-amber-400">Còn 14 Ngày Nữa</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Roadmap Timeline Container with Sidebar AI Companion -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Main Timeline Left Column -->
+        <div class="lg:col-span-8 bg-white p-6 rounded-2xl border border-slate-300 shadow-sm space-y-6">
+          <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+            <div class="font-bold text-sm text-slate-800">Các mốc thời gian hoàn thành (Timeline Step-by-Step)</div>
+            <div class="text-xs text-emerald-600 font-semibold">Tiến độ: 15%</div>
+          </div>
+
+          <!-- Progress bar -->
+          <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+            <div class="bg-emerald-500 h-full w-[15%]"></div>
+          </div>
+
+          <!-- Timeline Vertical Sequence -->
+          <div class="relative pl-6 border-l-2 border-slate-200 space-y-8">
+
+            <!-- Phase 1: High Priority (Blind Spot Fixing) -->
+            <div class="relative">
+              <span class="absolute -left-[31px] top-0 w-6 h-6 rounded-full bg-rose-500 text-white flex items-center justify-center text-xs font-bold ring-4 ring-white">1</span>
+              <div class="bg-rose-50/50 p-4 rounded-xl border border-rose-200 space-y-2">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <span class="text-[10px] font-bold text-rose-600 uppercase tracking-wider">Ưu tiên gấp • Ngày 1 - Ngày 3</span>
+                    <h4 class="font-bold text-sm text-slate-900">Giai đoạn 1: Trám lỗ hổng Cây AVL &amp; B-Tree</h4>
+                  </div>
+                  <span class="px-2 py-0.5 bg-rose-100 text-rose-700 text-[10px] font-bold rounded">Chưa xong</span>
+                </div>
+                <p class="text-xs text-slate-600">Xem video mô phỏng thao tác xoay cây và hoàn thành 10 bài tập trắc nghiệm chẩn đoán.</p>
+                <div class="pt-2 flex items-center space-x-2">
+                  <button type="button" onclick="switchScreen(6)" class="px-3 py-1.5 bg-rose-600 text-white rounded-lg text-xs font-bold hover:bg-rose-700 transition flex items-center space-x-1">
+                    <i class="fa-solid fa-play text-[10px]"></i>
+                    <span>Học ngay tài liệu đề xuất</span>
+                  </button>
+                  <span class="text-[11px] text-slate-500">Thời lượng dự kiến: 45 phút</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Phase 2: Practice & Refine -->
+            <div class="relative">
+              <span class="absolute -left-[31px] top-0 w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs font-bold ring-4 ring-white">2</span>
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Ngày 4 - Ngày 7</span>
+                    <h4 class="font-bold text-sm text-slate-800">Giai đoạn 2: Luyện tập thuật toán Sắp xếp QuickSort &amp; MergeSort</h4>
+                  </div>
+                  <span class="px-2 py-0.5 bg-slate-200 text-slate-600 text-[10px] font-bold rounded">Đang chờ</span>
+                </div>
+                <p class="text-xs text-slate-600">Thực hành giải 15 bài tập dạng đếm số phép so sánh và viết mã giả.</p>
+              </div>
+            </div>
+
+            <!-- Phase 3: Mock Exams -->
+            <div class="relative">
+              <span class="absolute -left-[31px] top-0 w-6 h-6 rounded-full bg-wf-primary text-white flex items-center justify-center text-xs font-bold ring-4 ring-white">3</span>
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Ngày 8 - Ngày 14</span>
+                    <h4 class="font-bold text-sm text-slate-800">Giai đoạn 3: Giải 3 Đề thi thử chuẩn cấu trúc các năm</h4>
+                  </div>
+                  <span class="px-2 py-0.5 bg-slate-200 text-slate-600 text-[10px] font-bold rounded">Khóa</span>
+                </div>
+                <p class="text-xs text-slate-600">Thi thử trong điều kiện bấm giờ thực tế để tối ưu chiến thuật làm bài.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- AI Companion Chat Widget Right Column -->
+        <div class="lg:col-span-4 space-y-4">
+          <div class="bg-white rounded-2xl border-2 border-slate-300 shadow-sm overflow-hidden flex flex-col h-[480px]">
+            <!-- Chat Header -->
+            <div class="p-3.5 bg-slate-900 text-white flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <div class="w-7 h-7 rounded-full bg-wf-primary flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-robot"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-xs">Trợ lý Học tập SLAPE</div>
+                  <div class="text-[9px] text-emerald-400">● Đang sẵn sàng đồng hành</div>
+                </div>
+              </div>
+              <span class="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-300">v2.4 SLAPE</span>
+            </div>
+
+            <!-- Chat Messages Body -->
+            <div class="flex-grow p-4 space-y-3 overflow-y-auto text-xs bg-slate-50/50">
+              <!-- AI Msg -->
+              <div class="flex items-start space-x-2">
+                <div class="w-6 h-6 rounded-full bg-wf-primary text-white flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">
+                  <i class="fa-solid fa-robot"></i>
+                </div>
+                <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700 space-y-1">
+                  <p>Chào bạn! Hôm nay bạn chỉ cần hoàn thành <strong>1 Module (45 phút)</strong> để giữ đúng tiến độ ôn thi.</p>
+                  <div class="text-[9px] text-slate-400 text-right">08:31 AM</div>
+                </div>
+              </div>
+
+              <!-- User Msg -->
+              <div class="flex items-start justify-end space-x-2">
+                <div class="bg-wf-primary text-white p-3 rounded-2xl rounded-tr-none shadow-sm space-y-1 max-w-[85%]">
+                  <p>AI giải thích nhanh giúp mình tại sao Cây AVL lại cần xoay khi lệch không?</p>
+                  <div class="text-[9px] text-blue-200 text-right">08:32 AM</div>
+                </div>
+              </div>
+
+              <!-- AI Response -->
+              <div class="flex items-start space-x-2">
+                <div class="w-6 h-6 rounded-full bg-wf-primary text-white flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">
+                  <i class="fa-solid fa-robot"></i>
+                </div>
+                <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-slate-700 space-y-1">
+                  <p>Xoay cây nhằm đảm bảo chiều cao luôn ở mức <strong>O(log N)</strong>, giúp tốc độ tìm kiếm không bị suy biến thành danh sách liên kết!</p>
+                  <div class="text-[9px] text-slate-400 text-right">08:32 AM</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Action Prompts & Input -->
+            <div class="p-3 bg-white border-t border-slate-200 space-y-2">
+              <div class="flex gap-1.5 overflow-x-auto pb-1 text-[10px]">
+                <button type="button" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-md whitespace-nowrap text-slate-700">📌 Giải thích câu sai</button>
+                <button type="button" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-md whitespace-nowrap text-slate-700">💡 Cho ví dụ Cây AVL</button>
+              </div>
+              <div class="flex space-x-2">
+                <input type="text" placeholder="Hỏi AI bất kỳ thắc mắc nào..." class="flex-grow px-3 py-1.5 border border-slate-300 rounded-lg text-xs focus:ring-1 focus:ring-wf-primary">
+                <button type="button" class="px-3 py-1.5 bg-wf-primary text-white rounded-lg text-xs font-bold hover:bg-wf-primaryDark">
+                  <i class="fa-solid fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================== SCREEN 6: CURATED RESOURCE HUB ==================== -->
+    <section id="screen-6" class="screen-content space-y-6 hidden">
+      <!-- Section Header -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <span class="text-xs font-bold text-wf-primary uppercase tracking-wider">Màn hình 6</span>
+          <h2 class="text-2xl font-bold text-slate-900">Kho Tài liệu &amp; Bài giảng Phân loại Thông minh</h2>
+          <p class="text-xs text-slate-500">Video YouTube được lọc đúng phân đoạn bài giảng + Ngân hàng đề thi thử có đáp án.</p>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <span class="text-xs font-semibold text-slate-600">Lọc theo điểm mù:</span>
+          <span class="px-3 py-1 bg-rose-100 text-rose-700 text-xs font-bold rounded-full border border-rose-200">
+            <i class="fa-solid fa-filter"></i> Đang bật lọc AI
+          </span>
+        </div>
+      </div>
+
+      <!-- Search & Filter Controls Panel -->
+      <div class="bg-white p-4 rounded-xl border border-slate-300 shadow-sm space-y-3">
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+          <div class="sm:col-span-6 relative">
+            <input type="text" placeholder="Tìm tên đề thi, thuật toán, giảng viên..." class="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-xs">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+          </div>
+          <div class="sm:col-span-3">
+            <select class="w-full p-2 border border-slate-300 rounded-lg text-xs bg-white">
+              <option>Tất cả loại tài liệu</option>
+              <option selected>Video Bài giảng Youtube</option>
+              <option>Đề thi thử PDF</option>
+              <option>Slide &amp; Tóm tắt công thức</option>
+            </select>
+          </div>
+          <div class="sm:col-span-3">
+            <select class="w-full p-2 border border-slate-300 rounded-lg text-xs bg-white">
+              <option selected>Sắp xếp: Phù hợp nhất với Lộ trình AI</option>
+              <option>Mới nhất</option>
+              <option>Được xem nhiều nhất</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resource Grid Tabs Content -->
+      <div class="space-y-6">
+
+        <!-- PART A: AI CURATED YOUTUBE LECTURES -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-800 flex items-center space-x-2">
+              <i class="fa-brands fa-youtube text-red-600 text-base"></i>
+              <span>Bài giảng YouTube đã Phân loại &amp; Cắt phân đoạn (AI Curated)</span>
+            </h3>
+            <a href="#" onclick="return false;" class="text-xs text-wf-primary hover:underline">Xem tất cả (24 video)</a>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Video Card 1 -->
+            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col">
+              <!-- Visual Wireframe Thumbnail -->
+              <div class="relative bg-slate-800 aspect-video flex items-center justify-center text-white">
+                <i class="fa-solid fa-play-circle text-4xl opacity-80 hover:opacity-100 transition cursor-pointer"></i>
+                <span class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/80 text-[10px] rounded">14:20</span>
+                <span class="absolute top-2 left-2 px-2 py-0.5 bg-rose-600 text-white text-[9px] font-bold rounded">Trám Điểm mù #1</span>
+              </div>
+              <div class="p-3.5 flex-grow space-y-2 flex flex-col justify-between">
+                <div>
+                  <div class="text-[10px] font-semibold text-slate-400 uppercase">Kênh: Thầy Tùng CNTT</div>
+                  <h4 class="font-bold text-xs text-slate-900 line-clamp-2">Hiểu rõ Thao tác Xoay Cây AVL trong 15 phút (Có minh họa 3D)</h4>
+                </div>
+                <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-[11px]">
+                  <span class="text-slate-500">Khớp 98% lỗ hổng</span>
+                  <button type="button" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold rounded text-[10px]">
+                    Xem ngay
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Video Card 2 -->
+            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col">
+              <div class="relative bg-slate-800 aspect-video flex items-center justify-center text-white">
+                <i class="fa-solid fa-play-circle text-4xl opacity-80 hover:opacity-100 transition cursor-pointer"></i>
+                <span class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/80 text-[10px] rounded">22:05</span>
+                <span class="absolute top-2 left-2 px-2 py-0.5 bg-amber-600 text-white text-[9px] font-bold rounded">Trám Điểm mù #2</span>
+              </div>
+              <div class="p-3.5 flex-grow space-y-2 flex flex-col justify-between">
+                <div>
+                  <div class="text-[10px] font-semibold text-slate-400 uppercase">Kênh: Học Giải thuật Cùng AI</div>
+                  <h4 class="font-bold text-xs text-slate-900 line-clamp-2">Mẹo chọn Pivot QuickSort không bao giờ bị lệch bước phân hoạch</h4>
+                </div>
+                <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-[11px]">
+                  <span class="text-slate-500">Khớp 89% lỗ hổng</span>
+                  <button type="button" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold rounded text-[10px]">
+                    Xem ngay
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Video Card 3 -->
+            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col">
+              <div class="relative bg-slate-800 aspect-video flex items-center justify-center text-white">
+                <i class="fa-solid fa-play-circle text-4xl opacity-80 hover:opacity-100 transition cursor-pointer"></i>
+                <span class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/80 text-[10px] rounded">40:15</span>
+                <span class="absolute top-2 left-2 px-2 py-0.5 bg-blue-600 text-white text-[9px] font-bold rounded">Tổng ôn Cuối kỳ</span>
+              </div>
+              <div class="p-3.5 flex-grow space-y-2 flex flex-col justify-between">
+                <div>
+                  <div class="text-[10px] font-semibold text-slate-400 uppercase">Kênh: Ôn Thi Đại Học &amp; Cao Đẳng</div>
+                  <h4 class="font-bold text-xs text-slate-900 line-clamp-2">Giải trọn bộ 50 câu trắc nghiệm Cấu trúc dữ liệu cuối kỳ mẫu</h4>
+                </div>
+                <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-[11px]">
+                  <span class="text-slate-500">Ôn tập tổng hợp</span>
+                  <button type="button" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold rounded text-[10px]">
+                    Xem ngay
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PART B: PRACTICE EXAMS & BANK -->
+        <div class="space-y-3 pt-4 border-t border-slate-200">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-800 flex items-center space-x-2">
+              <i class="fa-solid fa-file-pen text-wf-primary text-base"></i>
+              <span>Ngân hàng Đề thi thử &amp; Tài liệu Ôn tập</span>
+            </h3>
+            <span class="text-xs text-slate-500">Tổng cộng 12 bộ đề</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Exam Card 1 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg bg-blue-50 text-wf-primary flex items-center justify-center font-bold text-sm">
+                  PDF
+                </div>
+                <div>
+                  <h4 class="font-bold text-xs text-slate-800">Đề thi thử Cuối kỳ 2025 - Cấu trúc dữ liệu</h4>
+                  <div class="text-[10px] text-slate-500">40 Câu trắc nghiệm • Có đáp án chi tiết AI giải</div>
+                </div>
+              </div>
+              <button type="button" onclick="switchScreen(3)" class="px-3 py-1.5 bg-wf-primary text-white rounded-lg text-xs font-semibold hover:bg-wf-primaryDark transition">
+                Làm bài ngay
+              </button>
+            </div>
+
+            <!-- Exam Card 2 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-sm">
+                  DOC
+                </div>
+                <div>
+                  <h4 class="font-bold text-xs text-slate-800">Tóm tắt Sơ đồ tư duy Công thức Thuật toán</h4>
+                  <div class="text-[10px] text-slate-500">Tóm gọn 5 trang • Phù hợp ôn trước giờ thi</div>
+                </div>
+              </div>
+              <button type="button" class="px-3 py-1.5 border border-slate-300 text-slate-700 rounded-lg text-xs font-semibold hover:bg-slate-50 transition">
+                Tải xuống
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom CTA to Screen 7 -->
+        <div class="pt-4 flex justify-end">
+          <button type="button" onclick="switchScreen(7)" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-xs shadow-md transition flex items-center space-x-2">
+            <i class="fa-solid fa-trophy"></i>
+            <span>Xem Xếp Hạng &amp; Thành Tích &rarr;</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==================== SCREEN 7: LEADERBOARD & ACHIEVEMENTS ==================== -->
+    <section id="screen-7" class="screen-content space-y-6 hidden">
+      <!-- Personal Stats & Privacy Banner -->
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-6 rounded-2xl shadow-md space-y-5">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Màn hình 7 • Gamification</span>
+            <h2 class="text-2xl font-bold">Bảng Xếp Hạng &amp; Thành Tích Học Tập</h2>
+            <p class="text-xs text-slate-300">Tích lũy điểm XP qua từng bài test và module điểm mù để thăng hạng mỗi tuần.</p>
+          </div>
+
+          <!-- Privacy Nickname Toggle -->
+          <div class="bg-white/10 border border-white/20 px-4 py-2.5 rounded-xl flex items-center space-x-3">
+            <div class="text-right">
+              <div class="text-xs font-bold text-white flex items-center justify-end space-x-1.5">
+                <i class="fa-solid fa-user-secret text-amber-400"></i>
+                <span>Chế độ Biệt danh Ẩn danh</span>
+              </div>
+              <div class="text-[10px] text-slate-300">Hiển thị: <strong id="privacy-display-name" class="text-amber-300">SinhVien_BiAn</strong></div>
+            </div>
+            <button type="button" onclick="togglePrivacyMode()" id="privacy-toggle-btn" class="w-11 h-6 bg-emerald-500 rounded-full relative transition-colors focus:outline-none">
+              <span id="privacy-toggle-dot" class="w-4 h-4 bg-white rounded-full absolute top-1 right-1 transition-all shadow"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Personal KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+          <div class="bg-white/10 border border-white/15 rounded-xl p-4 flex items-center space-x-3">
+            <div class="w-11 h-11 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl font-black">
+              #4
+            </div>
+            <div>
+              <div class="text-[11px] text-slate-300">Hạng hiện tại của bạn</div>
+              <div class="text-base font-extrabold text-white">Top 5% Tuần này</div>
+            </div>
+          </div>
+
+          <div class="bg-white/10 border border-white/15 rounded-xl p-4 flex items-center space-x-3">
+            <div class="w-11 h-11 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-xl">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <div>
+              <div class="text-[11px] text-slate-300">Tổng điểm kinh nghiệm</div>
+              <div class="text-base font-extrabold text-white">2,450 XP</div>
+            </div>
+          </div>
+
+          <div class="bg-white/10 border border-white/15 rounded-xl p-4 flex items-center space-x-3">
+            <div class="w-11 h-11 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center text-xl">
+              <i class="fa-solid fa-fire"></i>
+            </div>
+            <div>
+              <div class="text-[11px] text-slate-300">Chuỗi chăm chỉ (Study Streak)</div>
+              <div class="text-base font-extrabold text-orange-300">7 Ngày Liên Tiếp</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Grid: Leaderboard (Left 2/3) + Quests & Badges (Right 1/3) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left Column: Leaderboard -->
+        <div class="lg:col-span-8 bg-white p-6 rounded-2xl border border-slate-300 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-3">
+            <h3 class="text-sm font-bold text-slate-800 flex items-center space-x-2">
+              <i class="fa-solid fa-ranking-star text-amber-500 text-base"></i>
+              <span>Bảng Xếp Hạng Thi Đua Học Tập</span>
+            </h3>
+            <div class="flex bg-slate-100 p-1 rounded-lg text-xs">
+              <button type="button" onclick="filterLeaderboard(this)" class="lb-filter px-3 py-1 rounded-md bg-white text-wf-primary font-bold shadow-sm">Tuần này</button>
+              <button type="button" onclick="filterLeaderboard(this)" class="lb-filter px-3 py-1 rounded-md text-slate-600 font-medium hover:text-slate-900">Theo Môn học</button>
+              <button type="button" onclick="filterLeaderboard(this)" class="lb-filter px-3 py-1 rounded-md text-slate-600 font-medium hover:text-slate-900">Toàn Trường</button>
+            </div>
+          </div>
+
+          <!-- Leaderboard Rows -->
+          <div class="space-y-2.5">
+            <!-- Rank 1 -->
+            <div class="p-3.5 rounded-xl bg-amber-50/70 border border-amber-300 flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-amber-400 text-white font-black text-xs flex items-center justify-center shadow-sm">
+                  <i class="fa-solid fa-crown"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-xs text-slate-900 flex items-center space-x-1.5">
+                    <span>Panda_UEH</span>
+                    <span class="px-1.5 py-0.5 bg-amber-200 text-amber-900 text-[9px] rounded font-bold">Hạng Vàng</span>
+                  </div>
+                  <div class="text-[10px] text-slate-500">Đã xóa 12 điểm mù • 18 ngày Streak</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="font-extrabold text-sm text-amber-700">3,820 XP</div>
+                <div class="text-[10px] text-orange-600 font-semibold"><i class="fa-solid fa-fire"></i> 18 ngày</div>
+              </div>
+            </div>
+
+            <!-- Rank 2 -->
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-300 flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-slate-400 text-white font-black text-xs flex items-center justify-center shadow-sm">
+                  2
+                </div>
+                <div>
+                  <div class="font-bold text-xs text-slate-900 flex items-center space-x-1.5">
+                    <span>MeoLoiCode</span>
+                    <span class="px-1.5 py-0.5 bg-slate-200 text-slate-700 text-[9px] rounded font-bold">Hạng Bạc</span>
+                  </div>
+                  <div class="text-[10px] text-slate-500">Đã xóa 9 điểm mù • 14 ngày Streak</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="font-extrabold text-sm text-slate-700">3,190 XP</div>
+                <div class="text-[10px] text-orange-600 font-semibold"><i class="fa-solid fa-fire"></i> 14 ngày</div>
+              </div>
+            </div>
+
+            <!-- Rank 3 -->
+            <div class="p-3.5 rounded-xl bg-orange-50/50 border border-orange-200 flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-amber-700 text-white font-black text-xs flex items-center justify-center shadow-sm">
+                  3
+                </div>
+                <div>
+                  <div class="font-bold text-xs text-slate-900 flex items-center space-x-1.5">
+                    <span>HocBa_K48</span>
+                    <span class="px-1.5 py-0.5 bg-orange-200 text-orange-900 text-[9px] rounded font-bold">Hạng Đồng</span>
+                  </div>
+                  <div class="text-[10px] text-slate-500">Đã xóa 8 điểm mù • 11 ngày Streak</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="font-extrabold text-sm text-amber-800">2,840 XP</div>
+                <div class="text-[10px] text-orange-600 font-semibold"><i class="fa-solid fa-fire"></i> 11 ngày</div>
+              </div>
+            </div>
+
+            <!-- Rank 4 (Current User) -->
+            <div class="p-3.5 rounded-xl bg-blue-50 border-2 border-wf-primary flex items-center justify-between shadow-sm">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-wf-primary text-white font-black text-xs flex items-center justify-center">
+                  4
+                </div>
+                <div>
+                  <div class="font-bold text-xs text-wf-primary flex items-center space-x-1.5">
+                    <span id="lb-current-user-name">SinhVien_BiAn</span>
+                    <span class="px-1.5 py-0.5 bg-wf-primary text-white text-[9px] rounded font-bold">Bạn</span>
+                  </div>
+                  <div class="text-[10px] text-slate-600">Còn 390 XP nữa để vượt qua HocBa_K48!</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="font-extrabold text-sm text-wf-primary">2,450 XP</div>
+                <div class="text-[10px] text-orange-600 font-semibold"><i class="fa-solid fa-fire"></i> 7 ngày</div>
+              </div>
+            </div>
+
+            <!-- Rank 5 -->
+            <div class="p-3.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-600 font-bold text-xs flex items-center justify-center">
+                  5
+                </div>
+                <div>
+                  <div class="font-bold text-xs text-slate-800">CaPheSuaDa_99</div>
+                  <div class="text-[10px] text-slate-500">Đã xóa 5 điểm mù • 5 ngày Streak</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="font-bold text-sm text-slate-600">2,110 XP</div>
+                <div class="text-[10px] text-slate-400"><i class="fa-solid fa-fire"></i> 5 ngày</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Weekly Quest & Achievements -->
+        <div class="lg:col-span-4 space-y-5">
+          <!-- Weekly Quest Card -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-300 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center space-x-1.5">
+                <i class="fa-solid fa-bullseye text-rose-500"></i>
+                <span>Thử Thách Tuần</span>
+              </h3>
+              <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">+500 XP</span>
+            </div>
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+              <div class="flex justify-between text-xs font-bold text-slate-800">
+                <span>Hoàn thành 3 module điểm mù</span>
+                <span class="text-wf-primary">2/3</span>
+              </div>
+              <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                <div class="bg-wf-primary h-full w-2/3 rounded-full"></div>
+              </div>
+              <p class="text-[11px] text-slate-500">Hoàn thành thêm 1 module trong Lộ trình AI để nhận rương XP tuần.</p>
+            </div>
+          </div>
+
+          <!-- Achievements Badges Grid -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-300 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center space-x-1.5">
+                <i class="fa-solid fa-medal text-amber-500"></i>
+                <span>Huy Hiệu Thành Tích</span>
+              </h3>
+              <span class="text-[11px] text-slate-400">2/4 Đã mở</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <!-- Badge 1: Unlocked -->
+              <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 text-center space-y-1.5">
+                <div class="w-10 h-10 mx-auto rounded-full bg-emerald-500 text-white flex items-center justify-center text-base shadow-sm">
+                  <i class="fa-solid fa-crosshairs"></i>
+                </div>
+                <div class="font-bold text-[11px] text-slate-800">Kẻ Diệt Điểm Mù</div>
+                <div class="text-[9px] text-emerald-700 font-medium">Đã mở khóa</div>
+              </div>
+
+              <!-- Badge 2: Unlocked -->
+              <div class="p-3 rounded-xl bg-indigo-50/70 border border-indigo-200 text-center space-y-1.5">
+                <div class="w-10 h-10 mx-auto rounded-full bg-indigo-600 text-white flex items-center justify-center text-base shadow-sm">
+                  <i class="fa-solid fa-moon"></i>
+                </div>
+                <div class="font-bold text-[11px] text-slate-800">Chiến Thần Ôn Đêm</div>
+                <div class="text-[9px] text-indigo-700 font-medium">Đã mở khóa</div>
+              </div>
+
+              <!-- Badge 3: Locked -->
+              <div class="p-3 rounded-xl bg-slate-100 border border-slate-200 text-center space-y-1.5 opacity-60">
+                <div class="w-10 h-10 mx-auto rounded-full bg-slate-300 text-slate-600 flex items-center justify-center text-base">
+                  <i class="fa-solid fa-bolt-lightning"></i>
+                </div>
+                <div class="font-bold text-[11px] text-slate-700">Cày Đề Siêu Tốc</div>
+                <div class="text-[9px] text-slate-500"><i class="fa-solid fa-lock"></i> Giải 10 đề</div>
+              </div>
+
+              <!-- Badge 4: Locked -->
+              <div class="p-3 rounded-xl bg-slate-100 border border-slate-200 text-center space-y-1.5 opacity-60">
+                <div class="w-10 h-10 mx-auto rounded-full bg-slate-300 text-slate-600 flex items-center justify-center text-base">
+                  <i class="fa-solid fa-award"></i>
+                </div>
+                <div class="font-bold text-[11px] text-slate-700">Bậc Thầy Chẩn Đoán</div>
+                <div class="text-[9px] text-slate-500"><i class="fa-solid fa-lock"></i> Đạt 90+ điểm</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER (DARK THEME MATCHING REFERENCE) -->
+  <footer class="bg-[#0B0F19] text-slate-300 pt-12 pb-8 mt-auto border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Top Grid: 4 Columns -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-slate-800">
+        
+        <!-- Column 1: Brand & Address -->
+        <div class="space-y-4">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-600 to-sky-400 text-white flex items-center justify-center font-bold text-lg shadow">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <span class="font-extrabold text-xl tracking-wide text-white">SLAPE</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Nền tảng học tập cá nhân hóa và định hướng lộ trình thông minh dành cho sinh viên đại học.
+          </p>
+          <div class="space-y-2 text-xs text-slate-400">
+            <div class="flex items-start space-x-2">
+              <i class="fa-solid fa-location-dot text-sky-400 mt-0.5"></i>
+              <span>Phòng B2.412, số 279 Nguyễn Tri Phương, phường Diên Hồng (Phường 5), Quận 10, TP.HCM</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <i class="fa-solid fa-graduation-cap text-sky-400"></i>
+              <span>Nền tảng đại học sinh viên</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Tính năng nổi bật -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white">Tính năng</h4>
+          <ul class="space-y-2 text-xs text-slate-400">
+            <li><a href="#" onclick="switchScreen(2); return false;" class="hover:text-sky-400 transition">Cấu hình test chẩn đoán</a></li>
+            <li><a href="#" onclick="switchScreen(3); return false;" class="hover:text-sky-400 transition">Làm bài test điểm mù</a></li>
+            <li><a href="#" onclick="switchScreen(4); return false;" class="hover:text-sky-400 transition">Biểu đồ phân tích năng lực</a></li>
+            <li><a href="#" onclick="switchScreen(5); return false;" class="hover:text-sky-400 transition">Lộ trình ôn thi AI</a></li>
+            <li><a href="#" onclick="switchScreen(6); return false;" class="hover:text-sky-400 transition">Kho bài giảng &amp; Đề thi thử</a></li>
+            <li><a href="#" onclick="switchScreen(7); return false;" class="hover:text-sky-400 transition">Bảng xếp hạng &amp; Thành tích</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Chính sách & Hỗ trợ -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white">Hỗ trợ &amp; Bảo mật</h4>
+          <ul class="space-y-2 text-xs text-slate-400">
+            <li><a href="#" onclick="return false;" class="hover:text-sky-400 transition">Hướng dẫn sử dụng</a></li>
+            <li><a href="#" onclick="return false;" class="hover:text-sky-400 transition">Chế độ Biệt danh ẩn danh</a></li>
+            <li><a href="#" onclick="return false;" class="hover:text-sky-400 transition">Điều khoản dịch vụ</a></li>
+            <li><a href="#" onclick="return false;" class="hover:text-sky-400 transition">Chính sách quyền riêng tư</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Đơn vị sở hữu bản quyền -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white">Đơn vị sở hữu bản quyền</h4>
+          <div class="space-y-2.5 text-xs text-slate-400">
+            <div class="font-bold text-sm text-sky-400 flex items-center space-x-2">
+              <i class="fa-solid fa-lightbulb"></i>
+              <span>Creative minds</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <i class="fa-solid fa-phone text-slate-500 w-4"></i>
+              <span>Hotline: <strong class="text-slate-200">1909028246</strong></span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <i class="fa-solid fa-envelope text-slate-500 w-4"></i>
+              <span>Email: <a href="mailto:Creativeminds@gmail.com" class="text-slate-200 hover:text-sky-400 transition">Creativeminds@gmail.com</a></span>
+            </div>
+          </div>
+          <!-- Social Icons -->
+          <div class="pt-2 flex items-center space-x-3">
+            <a href="#" onclick="return false;" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white flex items-center justify-center transition text-xs">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="#" onclick="return false;" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white flex items-center justify-center transition text-xs">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+            <a href="#" onclick="return false;" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-sky-500 text-slate-300 hover:text-white flex items-center justify-center transition text-xs">
+              <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Copyright Bar -->
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+        <div>2026@SLAPE- Đại học kinh tế</div>
+        <div class="flex items-center space-x-1.5 text-slate-400">
+          <span>Made in</span>
+          <span class="font-semibold text-sky-400 flex items-center space-x-1">
+            <i class="fa-solid fa-wand-magic-sparkles text-[11px]"></i>
+            <span>Gemini</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WIREFRAME INTERACTIVE LOGIC SCRIPT -->
+  <script>
+    // State management
+    let currentScreen = 1;
+    let radarChartInstance = null;
+    let isAnonymousMode = true;
+
+    // Sample diagnostic test questions (Screen 3)
+    const diagnosticQuestions = [
+      {
+        topic: "Chuyên đề: Nguyên tắc Kế toán",
+        text: "Câu 1. Nguyên tắc kế toán nào yêu cầu doanh nghiệp phải ghi nhận doanh thu và chi phí vào kỳ kế toán phát sinh giao dịch, không phụ thuộc vào thời điểm thực thu hoặc thực chi tiền?",
+        options: [
+          "A. Nguyên tắc cơ sở dồn tích",
+          "B. Nguyên tắc giá gốc",
+          "C. Nguyên tắc nhất quán",
+          "D. Nguyên tắc thận trọng"
+        ]
+      },
+      {
+        topic: "Chuyên đề: Tài khoản & Định khoản",
+        text: "Câu 2. Khi mua hàng hóa nhập kho chưa thanh toán tiền cho người bán, kế toán ghi nhận vào tài khoản nào?",
+        options: [
+          "A. Nợ TK 156 / Có TK 111",
+          "B. Nợ TK 156 / Có TK 331",
+          "C. Nợ TK 331 / Có TK 156",
+          "D. Nợ TK 152 / Có TK 331"
+        ]
+      },
+      {
+        topic: "Chuyên đề: Tiền lương & Trích theo lương",
+        text: "Câu 3. Tỷ lệ trích các khoản BHXH, BHYT, BHTN, KPCĐ tính vào chi phí của doanh nghiệp theo quy định hiện hành là bao nhiêu?",
+        options: [
+          "A. 21,5% trên quỹ lương đóng bảo hiểm",
+          "B. 23,5% trên quỹ lương đóng bảo hiểm",
+          "C. 10,5% trên quỹ lương đóng bảo hiểm",
+          "D. 34,0% trên quỹ lương đóng bảo hiểm"
+        ]
+      },
+      {
+        topic: "Chuyên đề: Bút toán điều chỉnh & Khấu hao",
+        text: "Câu 4. Cuối kỳ, bút toán phân bổ chi phí công cụ dụng cụ xuất dùng nhiều kỳ (TK 242) cho bộ phận bán hàng được ghi nhận như thế nào?",
+        options: [
+          "A. Nợ TK 242 / Có TK 641",
+          "B. Nợ TK 642 / Có TK 153",
+          "C. Nợ TK 641 / Có TK 242",
+          "D. Nợ TK 641 / Có TK 214"
+        ]
+      },
+      {
+        topic: "Chuyên đề: Kết chuyển & Báo cáo tài chính",
+        text: "Câu 5. Tài khoản nào sau đây dùng để xác định kết quả kinh doanh của doanh nghiệp vào cuối kỳ kế toán?",
+        options: [
+          "A. TK 511 - Doanh thu bán hàng và cung cấp dịch vụ",
+          "B. TK 632 - Giá vốn hàng bán",
+          "C. TK 911 - Xác định kết quả kinh doanh",
+          "D. TK 421 - Lợi nhuận sau thuế chưa phân phối"
+        ]
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let userAnswers = new Array(diagnosticQuestions.length).fill(null);
+    let remainingSeconds = 29 * 60 + 45;
+    let countdownInterval = null;
+
+    function formatTimer(sec) {
+      const m = Math.floor(sec / 60).toString().padStart(2, '0');
+      const s = (sec % 60).toString().padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    function startCountdownTimer() {
+      const display = document.getElementById('test-countdown-display');
+      if (display) display.innerText = formatTimer(remainingSeconds);
+      if (countdownInterval) clearInterval(countdownInterval);
+      countdownInterval = setInterval(() => {
+        if (remainingSeconds > 0) {
+          remainingSeconds--;
+          if (display) display.innerText = formatTimer(remainingSeconds);
+        }
+      }, 1000);
+    }
+
+    function renderQuestionView() {
+      const q = diagnosticQuestions[currentQuestionIndex];
+      if (!q) return;
+
+      const badge = document.getElementById('question-number-badge');
+      const topicTag = document.getElementById('question-topic-tag');
+      const qText = document.getElementById('question-text');
+      const optionsContainer = document.getElementById('question-options');
+      const countLabel = document.getElementById('answered-count-label');
+      const palette = document.getElementById('question-palette');
+
+      if (badge) badge.innerText = `Câu hỏi ${currentQuestionIndex + 1} / ${diagnosticQuestions.length}`;
+      if (topicTag) topicTag.innerText = q.topic;
+      if (qText) qText.innerText = q.text;
+
+      const answeredCount = userAnswers.filter(a => a !== null).length;
+      if (countLabel) countLabel.innerText = `${answeredCount} / ${diagnosticQuestions.length} câu`;
+
+      if (optionsContainer) {
+        optionsContainer.innerHTML = q.options.map((optText, idx) => {
+          const isSelected = userAnswers[currentQuestionIndex] === idx;
+          const activeClass = isSelected
+            ? "border-2 border-wf-primary bg-blue-50/70 text-slate-900 font-semibold"
+            : "border border-slate-200 hover:border-slate-300 bg-white text-slate-700";
+          return `
+            <button type="button" onclick="selectTestAnswer(${idx})" class="w-full text-left p-3.5 rounded-xl transition flex items-center space-x-3 text-xs ${activeClass}">
+              <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold border ${isSelected ? 'bg-wf-primary text-white border-wf-primary' : 'border-slate-300 text-slate-500'}">
+                ${String.fromCharCode(65 + idx)}
+              </span>
+              <span>${optText.replace(/^[A-D]\.\s*/, '')}</span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      if (palette) {
+        palette.innerHTML = diagnosticQuestions.map((_, idx) => {
+          const isCurrent = idx === currentQuestionIndex;
+          const isAnswered = userAnswers[idx] !== null;
+          let cls = "bg-slate-100 text-slate-700 border border-slate-300 hover:bg-slate-200";
+          if (isCurrent) {
+            cls = "bg-wf-primary text-white font-bold shadow-sm";
+          } else if (isAnswered) {
+            cls = "bg-emerald-100 text-emerald-800 border border-emerald-400 font-bold";
+          }
+          return `
+            <button type="button" onclick="goToQuestion(${idx})" class="h-9 rounded-lg text-xs transition ${cls}">
+              ${idx + 1}
+            </button>
+          `;
+        }).join('');
+      }
+    }
+
+    function selectTestAnswer(optionIdx) {
+      userAnswers[currentQuestionIndex] = optionIdx;
+      renderQuestionView();
+    }
+
+    function goToQuestion(idx) {
+      if (idx >= 0 && idx < diagnosticQuestions.length) {
+        currentQuestionIndex = idx;
+        renderQuestionView();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestionView();
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestionIndex < diagnosticQuestions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestionView();
+      }
+    }
+
+    function submitTestAndGoReport() {
+      switchScreen(4);
+    }
+
+    // Switch between screens (7 screens)
+    function switchScreen(screenNum) {
+      currentScreen = screenNum;
+      
+      // Hide all screens
+      document.querySelectorAll('.screen-content').forEach(el => {
+        el.classList.add('hidden');
+      });
+
+      // Show selected screen
+      const activeScreen = document.getElementById(`screen-${screenNum}`);
+      if (activeScreen) {
+        activeScreen.classList.remove('hidden');
+      }
+
+      // Update Nav Buttons active state
+      for (let i = 1; i <= 7; i++) {
+        const btn = document.getElementById(`nav-btn-${i}`);
+        const mobileBtn = document.getElementById(`mobile-nav-${i}`);
+        
+        if (i === screenNum) {
+          if (btn) {
+            btn.className = "nav-tab px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 flex items-center space-x-1 bg-wf-primary text-white shadow-sm";
+          }
+          if (mobileBtn) {
+            mobileBtn.className = "px-3 py-1 whitespace-nowrap text-xs font-bold rounded-lg bg-wf-primary text-white";
+          }
+        } else {
+          if (btn) {
+            btn.className = "nav-tab px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 flex items-center space-x-1 text-slate-600 hover:text-slate-900";
+          }
+          if (mobileBtn) {
+            mobileBtn.className = "px-3 py-1 whitespace-nowrap text-xs font-medium rounded-lg bg-slate-200 text-slate-700";
+          }
+        }
+      }
+
+      // If Screen 3 (Bài test) is opened, render question & timer
+      if (screenNum === 3) {
+        renderQuestionView();
+        startCountdownTimer();
+      }
+
+      // If Screen 4 (Báo cáo Điểm mù) is opened, render or update Radar Chart
+      if (screenNum === 4) {
+        setTimeout(renderRadarChart, 100);
+      }
+
+      // Scroll to top smooth
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Toggle Privacy Nickname Mode on Screen 7
+    function togglePrivacyMode() {
+      isAnonymousMode = !isAnonymousMode;
+      const btn = document.getElementById('privacy-toggle-btn');
+      const dot = document.getElementById('privacy-toggle-dot');
+      const headerName = document.getElementById('privacy-display-name');
+      const lbName = document.getElementById('lb-current-user-name');
+
+      if (isAnonymousMode) {
+        btn.className = "w-11 h-6 bg-emerald-500 rounded-full relative transition-colors focus:outline-none";
+        dot.className = "w-4 h-4 bg-white rounded-full absolute top-1 right-1 transition-all shadow";
+        headerName.innerText = "SinhVien_BiAn";
+        lbName.innerText = "SinhVien_BiAn";
+      } else {
+        btn.className = "w-11 h-6 bg-slate-600 rounded-full relative transition-colors focus:outline-none";
+        dot.className = "w-4 h-4 bg-white rounded-full absolute top-1 left-1 transition-all shadow";
+        headerName.innerText = "Nguyễn Minh Anh (K48)";
+        lbName.innerText = "Nguyễn Minh Anh (K48)";
+      }
+    }
+
+    // Filter tabs visual state on Screen 7
+    function filterLeaderboard(clickedBtn) {
+      document.querySelectorAll('.lb-filter').forEach(btn => {
+        btn.className = "lb-filter px-3 py-1 rounded-md text-slate-600 font-medium hover:text-slate-900";
+      });
+      clickedBtn.className = "lb-filter px-3 py-1 rounded-md bg-white text-wf-primary font-bold shadow-sm";
+    }
+
+    // Toggle Auth Form mode (Login / Signup)
+    function toggleAuthMode(mode) {
+      const loginTab = document.getElementById('auth-tab-login');
+      const signupTab = document.getElementById('auth-tab-signup');
+      const fieldNickname = document.getElementById('field-nickname');
+      const btnLabel = document.getElementById('auth-btn-label');
+
+      if (mode === 'signup') {
+        signupTab.className = "flex-1 pb-3 text-center text-sm font-bold border-b-2 border-wf-primary text-wf-primary";
+        loginTab.className = "flex-1 pb-3 text-center text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-600";
+        fieldNickname.classList.remove('hidden');
+        btnLabel.innerText = "TẠO TÀI KHOẢN BẢO MẬT";
+      } else {
+        loginTab.className = "flex-1 pb-3 text-center text-sm font-bold border-b-2 border-wf-primary text-wf-primary";
+        signupTab.className = "flex-1 pb-3 text-center text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-600";
+        fieldNickname.classList.add('hidden');
+        btnLabel.innerText = "ĐĂNG NHẬP NGAY";
+      }
+    }
+
+    // Handle Auth submit
+    function handleAuthSubmit(event) {
+      event.preventDefault();
+      // Jump to Screen 2
+      switchScreen(2);
+    }
+
+    // Select Major Card handler
+    function selectMajor(majorId) {
+      document.querySelectorAll('.major-card').forEach(card => {
+        card.className = "major-card p-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white text-left transition space-y-1";
+      });
+      const selected = document.getElementById(`major-${majorId}`);
+      if (selected) {
+        selected.className = "major-card p-3 rounded-xl border-2 border-wf-primary bg-blue-50/50 text-left transition space-y-1";
+      }
+    }
+
+    // Diagnostic test simulation handler -> opens Screen 3 (Bài test)
+    function startDiagnosticTest() {
+      switchScreen(3);
+    }
+
+    function finishTestAndShowReport() {
+      switchScreen(4);
+    }
+
+    // Render Chart.js Radar Chart
+    function renderRadarChart() {
+      const ctx = document.getElementById('radarChart');
+      if (!ctx) return;
+
+      if (radarChartInstance) {
+        radarChartInstance.destroy();
+      }
+
+      radarChartInstance = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: ['Mảng & Danh sách', 'Cây AVL & B-Tree', 'Sắp xếp QuickSort', 'Đồ thị DFS/BFS', 'Độ phức tạp O(N)'],
+          datasets: [{
+            label: 'Năng lực đạt được (%)',
+            data: [85, 30, 45, 75, 50],
+            fill: true,
+            backgroundColor: 'rgba(37, 99, 235, 0.2)',
+            borderColor: '#2563EB',
+            pointBackgroundColor: '#2563EB',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: '#2563EB'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              angleLines: { color: '#E2E8F0' },
+              grid: { color: '#E2E8F0' },
+              pointLabels: {
+                font: { size: 10, family: 'Inter', weight: '600' },
+                color: '#334155'
+              },
+              suggestedMin: 0,
+              suggestedMax: 100
+            }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+    }
+
+    // Initialize screen on window load
+    window.onload = function() {
+      switchScreen(1);
+    };
+  </script>
+</body>
+</html>
